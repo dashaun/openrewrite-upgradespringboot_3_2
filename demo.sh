@@ -6,7 +6,7 @@ vendir sync
 export TYPE_SPEED=100
 export DEMO_PROMPT="${GREEN}➜ ${CYAN}\W ${COLOR_RESET}"
 TEMP_DIR="upgrade-example"
-PROMPT_TIMEOUT=5
+PROMPT_TIMEOUT=8
 
 # Function to pause and clear the screen
 function talkingPoint() {
@@ -25,7 +25,7 @@ function initSDKman() {
   fi
   sdk update
   sdk install java 8.0.392-librca
-  sdk install java 21.0.1-graalce
+  sdk install java 21.0.1-librca
 }
 
 # Prepare the working directory
@@ -46,7 +46,7 @@ function useJava8 {
 # Switch to Java 21 and display version
 function useJava21 {
   displayMessage "Switch to Java 21 for Spring Boot 3"
-  pei "sdk use java 21.0.1-graalce"
+  pei "sdk use java 21.0.1-librca"
   pei "java -version"
 }
 
@@ -58,10 +58,8 @@ function cloneApp {
 
 # Start the Spring Boot application
 function springBootStart {
-  PROMPT_TIMEOUT=10
   displayMessage "Start the Spring Boot application"
   pei "./mvnw -q clean package spring-boot:start -Dfork=true -DskipTests 2>&1 | tee '$1' &"
-  PROMPT_TIMEOUT=5
 }
 
 # Stop the Spring Boot application
@@ -131,9 +129,11 @@ function statsSoFarTable {
   echo "--------------------------------------------------------------------------------------------"
   echo "That's just infrastructure savings, we haven't even started talking about the security yet."
   echo "The latest version is getting OSS security updates."
+  echo ""
   echo "Spring Boot 2.5 (or older) is no longer getting support."
   echo "Spring Boot 2.7 OSS support ended 2023-11-24"
   echo "Spring Boot 2.6 commercial support ends 2024-02-24"
+  echo "Spring Boot 2.7 commercial support ends 2025-08-24"
   echo ""
   echo "Spring Boot 3.2 was released 2023-11-23, you should be using that now!"
 }
