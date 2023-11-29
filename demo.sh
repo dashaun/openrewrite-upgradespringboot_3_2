@@ -52,22 +52,28 @@ function useJava21 {
 
 # Clone a simple Spring Boot application
 function cloneApp {
-  displayMessage "Clone a Spring Boot 2.6.0 application"
-  pei "git clone https://github.com/dashaun/hello-spring-boot-2-6.git ./"
+  displayMessage "Clone a Spring Boot 1.5.0 application. Again, it's a demo, DO NOT USE 1.5.x!"
+  pei "git clone https://github.com/dashaun/hello-spring-boot-1-5.git ./"
 }
 
 # Start the Spring Boot application
 function springBootStart {
   PROMPT_TIMEOUT=10
   displayMessage "Start the Spring Boot application"
-  pei "./mvnw -q clean package spring-boot:start -DskipTests 2>&1 | tee '$1' &"
+  pei "./mvnw -q clean package spring-boot:start -Dfork=true -DskipTests 2>&1 | tee '$1' &"
   PROMPT_TIMEOUT=5
 }
 
 # Stop the Spring Boot application
 function springBootStop {
   displayMessage "Stop the Spring Boot application"
-  pei "./mvnw spring-boot:stop -Dspring-boot.stop.fork"
+  pei "./mvnw spring-boot:stop -Dfork=true"
+}
+
+# Check the health of the application
+function validateAppOldPattern {
+  displayMessage "Check application health"
+  pei "http :8080/health"
 }
 
 # Check the health of the application
@@ -110,11 +116,11 @@ function statsSoFarTable {
   printf "%-35s %-25s %-15s %s\n" "Configuration" "Startup Time (seconds)" "(MB) Used" "(MB) Savings"
   echo "--------------------------------------------------------------------------------------------"
 
-  # Spring Boot 2.6 with Java 8
-  #STARTUP1=$(sed -nE 's/.* in ([0-9]+\.[0-9]+) seconds.*/\1/p' < java8with2.6.log)
-  #STARTUP1=$(grep -o 'Started HelloSpringApplication in .*' < java8with2.6.log)
-  MEM1=$(cat java8with2.6.log2)
-  printf "%-35s %-25s %-15s %s\n" "Spring Boot 2.6 with Java 8" "$(startupTime 'java8with2.6.log')" "$MEM1" "-"
+  # Spring Boot 1.5 with Java 8
+  #STARTUP1=$(sed -nE 's/.* in ([0-9]+\.[0-9]+) seconds.*/\1/p' < java8with1.5.log)
+  #STARTUP1=$(grep -o 'Started HelloSpringApplication in .*' < java8with1.5.log)
+  MEM1=$(cat java8with1.5.log2)
+  printf "%-35s %-25s %-15s %s\n" "Spring Boot 1.5 with Java 8" "$(startupTime 'java8with1.5.log')" "$MEM1" "-"
 
   # Spring Boot 3.2 with Java 21
   #STARTUP2=$(grep -o 'Started HelloSpringApplication in .*' < java21with3.2.log)
@@ -144,11 +150,11 @@ useJava8
 talkingPoint
 cloneApp
 talkingPoint
-springBootStart java8with2.6.log
+springBootStart java8with1.5.log
 talkingPoint
-validateApp
+validateAppOldPattern
 talkingPoint
-showMemoryUsage "$(jps | grep 'HelloSpringApplication' | cut -d ' ' -f 1)" java8with2.6.log2
+showMemoryUsage "$(jps | grep 'HelloSpringApplication' | cut -d ' ' -f 1)" java8with1.5.log2
 talkingPoint
 springBootStop
 talkingPoint
