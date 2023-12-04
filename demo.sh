@@ -64,8 +64,10 @@ function springBootStart {
 
 # Stop the Spring Boot application
 function springBootStop {
+  PROMPT_TIMEOUT=15
   displayMessage "Stop the Spring Boot application"
   pei "./mvnw spring-boot:stop -Dfork=true"
+  PROMPT_TIMEOUT=5
 }
 
 # Check the health of the application
