@@ -6,7 +6,7 @@ vendir sync
 export TYPE_SPEED=100
 export DEMO_PROMPT="${GREEN}➜ ${CYAN}\W ${COLOR_RESET}"
 TEMP_DIR="upgrade-example"
-PROMPT_TIMEOUT=8
+PROMPT_TIMEOUT=5
 
 # Function to pause and clear the screen
 function talkingPoint() {
@@ -60,26 +60,27 @@ function cloneApp {
 function springBootStart {
   displayMessage "Start the Spring Boot application"
   pei "./mvnw -q clean package spring-boot:start -Dfork=true -DskipTests 2>&1 | tee '$1' &"
+  PROMPT_TIMEOUT=15
 }
 
 # Stop the Spring Boot application
 function springBootStop {
-  PROMPT_TIMEOUT=15
   displayMessage "Stop the Spring Boot application"
   pei "./mvnw spring-boot:stop -Dfork=true"
-  PROMPT_TIMEOUT=5
 }
 
 # Check the health of the application
 function validateAppOldPattern {
   displayMessage "Check application health"
   pei "http :8080/health"
+  PROMPT_TIMEOUT=5
 }
 
 # Check the health of the application
 function validateApp {
   displayMessage "Check application health"
   pei "http :8080/actuator/health"
+  PROMPT_TIMEOUT=5
 }
 
 # Display memory usage of the application
