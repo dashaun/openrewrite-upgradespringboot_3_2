@@ -6,7 +6,7 @@ vendir sync
 export TYPE_SPEED=100
 export DEMO_PROMPT="${GREEN}➜ ${CYAN}\W ${COLOR_RESET}"
 TEMP_DIR="upgrade-example"
-PROMPT_TIMEOUT=5
+#PROMPT_TIMEOUT=5
 
 # Function to pause and clear the screen
 function talkingPoint() {
@@ -24,7 +24,7 @@ function initSDKman() {
     exit 1
   fi
   sdk update
-  sdk install java 8.0.392-librca
+  sdk install java 8.0.402-librca
   sdk install java 21.0.2-librca
 }
 
@@ -39,7 +39,7 @@ function init {
 # Switch to Java 8 and display version
 function useJava8 {
   displayMessage "Use Java 8, this is for educational purposes only, don't do this at home! (I have jokes.)"
-  pei "sdk use java 8.0.392-librca"
+  pei "sdk use java 8.0.402-librca"
   pei "java -version" 
 }
 
@@ -96,7 +96,7 @@ function showMemoryUsage {
 # Upgrade the application to Spring Boot 3.2
 function rewriteApplication {
   displayMessage "Upgrade to Spring Boot 3.2"
-  pei "./mvnw -U org.openrewrite.maven:rewrite-maven-plugin:run -Drewrite.recipeArtifactCoordinates=org.openrewrite.recipe:rewrite-spring:LATEST -DactiveRecipes=org.openrewrite.java.spring.boot3.UpgradeSpringBoot_3_2"
+  pei "./mvnw -U org.openrewrite.maven:rewrite-maven-plugin:run -Drewrite.recipeArtifactCoordinates=org.openrewrite.recipe:rewrite-spring:LATEST -Drewrite.activeRecipes=org.openrewrite.java.spring.boot3.UpgradeSpringBoot_3_2"
 }
 
 # Display a message with a header
@@ -135,12 +135,11 @@ function statsSoFarTable {
   echo "Performance improvements."
   echo "Continued OSS support."
   echo ""
-  echo "Spring Boot 2.5 (or older) is no longer getting support."
+  echo "Spring Boot 2.6 (or older) is no longer getting support."
   echo "Spring Boot 2.7, 3.0 OSS support ended 2023-11-24"
-  echo "Spring Boot 2.6 commercial support ends 2024-02-24"
   echo "Spring Boot 2.7 commercial support ends 2025-08-24"
   echo ""
-  echo "Spring Boot 3.2 was released 2023-11-23, you should be using that now!"
+  echo "Spring Boot 3.2.3 was released 2024-2-22, you should be using that now!"
   ./mvnw dependency:tree | grep -E '(org.springframework|io.micrometer)' > spring-dependencies.txt
 }
 
