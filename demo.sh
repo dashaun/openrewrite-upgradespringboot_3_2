@@ -6,7 +6,7 @@ vendir sync
 export TYPE_SPEED=100
 export DEMO_PROMPT="${GREEN}➜ ${CYAN}\W ${COLOR_RESET}"
 TEMP_DIR="upgrade-example"
-#PROMPT_TIMEOUT=5
+PROMPT_TIMEOUT=5
 
 # Function to pause and clear the screen
 function talkingPoint() {
@@ -139,7 +139,7 @@ function statsSoFarTable {
   echo "Spring Boot 2.7, 3.0 OSS support ended 2023-11-24"
   echo "Spring Boot 2.7 commercial support ends 2025-08-24"
   echo ""
-  echo "Spring Boot 3.2.3 was released 2024-2-22, you should be using that now!"
+  echo "Spring Boot 3.2.5 was released 2024-4-18, you should be using that now!"
   ./mvnw dependency:tree | grep -E '(org.springframework|io.micrometer)' > spring-dependencies.txt
 }
 
